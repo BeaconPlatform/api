@@ -1,3 +1,0 @@
-Host beacon-database-migrations
-        Hostname github.com
-        User git

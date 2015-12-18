@@ -9,8 +9,6 @@ dependencies:
   pre:
     # Set the memory limit.
     - echo "memory_limit = 512M" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
-    # Copy over SSH config to centralize a hostname to be used in the script.
-    - cat config/circleci/ssh-config.txt >> ~/.ssh/config
     # Modify to allow running of file.
     - chmod +x ./build/database-migrations.sh
     # Modify storage folder permissions recursively so Laravel Artisan doesn't bomb out.

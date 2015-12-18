@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git clone beacon-database-migrations:BeaconPlatform/database-migrations.git ~/database-migrations
+git clone https://github.com/BeaconPlatform/database-migrations.git ~/database-migrations
 
 
 # Attempt to find the feature branch for migrations. Or, check out develop.
