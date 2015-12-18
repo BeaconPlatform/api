@@ -140,10 +140,10 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        Beacon\Api\Providers\AppServiceProvider::class,
+        Beacon\Api\Providers\AuthServiceProvider::class,
+        Beacon\Api\Providers\EventServiceProvider::class,
+        Beacon\Api\Providers\RouteServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
     ],
 
