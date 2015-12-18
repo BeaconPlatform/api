@@ -38,7 +38,7 @@ test:
     # Run Unit Tests.
     - vendor/bin/phpunit > build/artifacts/logs/phpunit-testing-output-log.txt
     # Copy over the application logs to build artifacts.
-    - cp storage/logs/* build/artifacts/logs
+    - cp -R ./storage/logs/ ./build/artifacts
 
 general:
   artifacts:
