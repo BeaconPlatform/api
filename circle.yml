@@ -20,9 +20,10 @@ dependencies:
     - a2ensite api
     # Restart Apache!
     - sudo service apache2 restart
+    # Copy .env.circleci to .env.
+    - cp .env.circleci .env
 
   post:
-    - cp .env.circleci .env
     - php artisan generate:key
 
 database:
