@@ -24,7 +24,7 @@ dependencies:
     - cp .env.circleci .env
 
   post:
-    - php artisan generate:key
+    - php artisan key:generate
 
 database:
   override:
