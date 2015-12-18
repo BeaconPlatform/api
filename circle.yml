@@ -1,0 +1,48 @@
+machine:
+  php:
+    version: 5.6.14
+  services:
+    - mysql
+    - redis
+
+dependencies:
+  pre:
+    # Set the memory limit.
+    - echo "memory_limit = 512M" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
+    # Copy over SSH config to centralize a hostname to be used in the script.
+    - cat config/circleci/ssh-config.txt >> ~/.ssh/config
+    # Modify to allow running of file.
+    - chmod +x ./build/database-migrations.sh
+    # Modify storage folder permissions recursively so Laravel Artisan doesn't bomb out.
+    - chmod -R 777 storage/*
+    # Handle creating an apache site for acceptance testing.
+    - cp ./app/config/circleci/api.conf /etc/apache2/sites-available/api
+    - a2enmod rewrite
+    - a2dissite default
+    - a2ensite api
+    # Restart Apache!
+    - sudo service apache2 restart
+
+database:
+  override:
+    # Run database migrations.
+    - ./build/database-migrations.sh
+
+test:
+  post:
+    # Create logs directory in build artifacts.
+    - mkdir -p build/artifacts/logs
+    # Run Unit Tests.
+    - vendor/bin/phpunit > build/artifacts/logs/phpunit-testing-output-log.txt
+    # Copy over the application logs to build artifacts.
+    - cp app/storage/logs/* build/artifacts/logs
+
+general:
+  artifacts:
+    - "build/artifacts/"
+
+deployment:
+  dev:
+    branch: develop
+    commands:
+      - curl -XPOST "https://beacon.deploybot.com/webhook/deploy?env_id=$deploybot_env_id&secret=$deploybot_secret&revision=$CIRCLE_SHA1"
