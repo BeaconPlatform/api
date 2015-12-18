@@ -16,7 +16,7 @@ dependencies:
     # Modify storage folder permissions recursively so Laravel Artisan doesn't bomb out.
     - chmod -R 777 storage/*
     # Handle creating an apache site for acceptance testing.
-    - cp ./app/config/circleci/api.conf /etc/apache2/sites-available/api
+    - cp ./config/circleci/api.conf /etc/apache2/sites-available/api
     - a2enmod rewrite
     - a2dissite default
     - a2ensite api
