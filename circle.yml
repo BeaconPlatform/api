@@ -21,6 +21,10 @@ dependencies:
     # Restart Apache!
     - sudo service apache2 restart
 
+  post:
+    - cp .env.circleci .env
+    - php artisan generate:key
+
 database:
   override:
     # Run database migrations.
@@ -33,7 +37,7 @@ test:
     # Run Unit Tests.
     - vendor/bin/phpunit > build/artifacts/logs/phpunit-testing-output-log.txt
     # Copy over the application logs to build artifacts.
-    - cp app/storage/logs/* build/artifacts/logs
+    - cp storage/logs/* build/artifacts/logs
 
 general:
   artifacts:
