@@ -144,7 +144,12 @@ return [
         Beacon\Api\Providers\AuthServiceProvider::class,
         Beacon\Api\Providers\EventServiceProvider::class,
         Beacon\Api\Providers\RouteServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
+        LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
+        Pingpong\Modules\ModulesServiceProvider::class,
+        LaravelDoctrine\ORM\DoctrineServiceProvider::class,
+        LaravelDoctrine\ACL\AclServiceProvider::class
     ],
 
     /*

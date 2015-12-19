@@ -1,0 +1,15 @@
+{
+	"name": "BeaconPlatform/api/auth",
+	"description": "",
+	"authors": [
+		{
+			"name": "BeaconPlatform",
+			"email": ""
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Beacon\\Api\\Auth\\": ""
+		}
+	}
+}
