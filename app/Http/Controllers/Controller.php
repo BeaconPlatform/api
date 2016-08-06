@@ -2,7 +2,10 @@
 
 namespace Beacon\Api\Http\Controllers;
 
+use Beacon\Api\Core\Entities\Person;
+use Beacon\Api\Core\Exceptions\PersonNotFoundException;
 use Beacon\Api\Core\Http\JsonResponse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -10,6 +13,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
+use LucaDegasperi\OAuth2Server\Authorizer;
 
 abstract class Controller extends BaseController
 {
@@ -20,9 +24,15 @@ abstract class Controller extends BaseController
      */
     protected $fractal;
 
-    public function __construct(Manager $fractal)
+    /**
+     * @var     Authorizer
+     */
+    protected $authorizationServer;
+
+    public function __construct(Manager $fractal, Authorizer $authorizationServer)
     {
-        $this->fractal      = $fractal;
+        $this->fractal              = $fractal;
+        $this->authorizationServer  = $authorizationServer;
     }
 
     public function collection($collection, $transformer, $key = null)
@@ -89,5 +99,20 @@ abstract class Controller extends BaseController
             $data = [$key => $data];
         }
         return $data;
+    }
+
+    /**
+     * Helper method to retrieve current person based on Resource Owner Identifier.
+     *
+     * @return      \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|Person
+     * @throws      PersonNotFoundException
+     */
+    protected function person()
+    {
+        try {
+            return Person::findOrFail($this->authorizationServer->getResourceOwnerId());
+        } catch (ModelNotFoundException $e) {
+            throw new PersonNotFoundException;
+        }
     }
 }

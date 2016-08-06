@@ -157,6 +157,6 @@ return [
     |
     */
 
-    'http_headers_only' => false,
+    'http_headers_only' => true,
 
 ];

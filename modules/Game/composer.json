@@ -1,0 +1,15 @@
+{
+	"name": "BeaconPlatform/api/game",
+	"description": "",
+	"authors": [
+		{
+			"name": "BeaconPlatform",
+			"email": ""
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Beacon\\Api\\Game\\": ""
+		}
+	}
+}

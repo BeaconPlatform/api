@@ -3,6 +3,7 @@
 use Beacon\Api\Authentication\Services\OAuth2\Server\Verifier\PasswordGrant;
 use Beacon\Api\Core\Repositories\PersonRepository;
 use Beacon\Api\Core\Repositories\PersonRepositoryInterface;
+use Beacon\Api\Core\Services\Fractal\Serializer;
 use Illuminate\Support\ServiceProvider;
 use League\Fractal\Manager as FractalManager;
 
@@ -67,6 +68,7 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->app->bind(FractalManager::class, function () {
             $manager = new FractalManager();
+            $manager->setSerializer(new Serializer);
             $manager->parseIncludes($this->app['request']->get('includes', []));
             return $manager;
         });
