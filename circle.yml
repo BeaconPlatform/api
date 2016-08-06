@@ -11,6 +11,8 @@ dependencies:
     - echo "memory_limit = 512M" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
     # Modify to allow running of file.
     - chmod +x ./build/database-migrations.sh
+    # Create directory.
+    - mkdir ~/database-migrations
     # Modify storage folder permissions recursively so Laravel Artisan doesn't bomb out.
     - chmod -R 777 storage/*
     # Handle creating an apache site for acceptance testing.
