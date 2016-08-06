@@ -2,6 +2,8 @@
 
 return [
 
+    'env' => env('APP_ENV', 'production'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -119,7 +121,6 @@ return [
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        Illuminate\Routing\ControllerServiceProvider::class,
         Illuminate\Cookie\CookieServiceProvider::class,
         Illuminate\Database\DatabaseServiceProvider::class,
         Illuminate\Encryption\EncryptionServiceProvider::class,
@@ -145,11 +146,11 @@ return [
         Beacon\Api\Providers\EventServiceProvider::class,
         Beacon\Api\Providers\RouteServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Pingpong\Modules\ModulesServiceProvider::class,
         LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
         LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
-        Pingpong\Modules\ModulesServiceProvider::class,
-        LaravelDoctrine\ORM\DoctrineServiceProvider::class,
-        LaravelDoctrine\ACL\AclServiceProvider::class
+        Eloquence\EloquenceServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class
     ],
 
     /*

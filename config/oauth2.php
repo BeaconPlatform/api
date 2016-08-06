@@ -28,7 +28,17 @@ return [
     */
 
     'grant_types' => [
-
+        'password' => [
+            'class' => '\League\OAuth2\Server\Grant\PasswordGrant',
+            'callback' => \Beacon\Api\Authentication\Services\OAuth2\Server\Verifier\PasswordGrant::class .
+                '@verify',
+            'access_token_ttl' => 86400
+        ],
+        'refresh_token' => [
+            'class' => '\League\OAuth2\Server\Grant\RefreshTokenGrant',
+            'access_token_ttl' => 86400,
+            'refresh_token_ttl' => 86400
+        ]
     ],
 
     /*
@@ -99,7 +109,7 @@ return [
     |
     */
 
-    'access_token_ttl' => 3600,
+    'access_token_ttl' => 86400,
 
     /*
     |--------------------------------------------------------------------------

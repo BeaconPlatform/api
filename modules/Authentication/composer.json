@@ -1,5 +1,5 @@
 {
-	"name": "BeaconPlatform/api/auth",
+	"name": "BeaconPlatform/api/authentication",
 	"description": "",
 	"authors": [
 		{
@@ -9,7 +9,7 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"Beacon\\Api\\Auth\\": ""
+			"Beacon\\Api\\Authentication\\": ""
 		}
 	}
 }

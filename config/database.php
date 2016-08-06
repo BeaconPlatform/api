@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'site'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,12 +52,24 @@ return [
             'prefix'   => '',
         ],
 
-        'mysql' => [
+        'site' => [
             'driver'    => 'mysql',
-            'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'forge'),
-            'username'  => env('DB_USERNAME', 'forge'),
-            'password'  => env('DB_PASSWORD', ''),
+            'host'      => env('DB_SITE_HOST', 'localhost'),
+            'database'  => env('DB_SITE_DATABASE', 'forge'),
+            'username'  => env('DB_SITE_USERNAME', 'forge'),
+            'password'  => env('DB_SITE_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
+
+        'game' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_GAME_HOST', 'localhost'),
+            'database'  => env('DB_GAME_DATABASE', 'forge'),
+            'username'  => env('DB_GAME_USERNAME', 'forge'),
+            'password'  => env('DB_GAME_PASSWORD', ''),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

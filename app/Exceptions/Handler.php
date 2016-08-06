@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Beacon\Api\Core\Http\JsonResponse;
+use Illuminate\Http\Exception\HttpResponseException;
 
 class Handler extends ExceptionHandler
 {
@@ -33,19 +35,53 @@ class Handler extends ExceptionHandler
         return parent::report($e);
     }
 
+
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $e
+     * @param  \Request    $request
+     * @param  \Exception $exception
+     *
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $e)
+    public function render($request, Exception $exception)
     {
-        if ($e instanceof ModelNotFoundException) {
-            $e = new NotFoundHttpException($e->getMessage(), $e);
+        $exceptionMessage = $exception->getMessage();
+        $data             = null;
+        if (\App::environment() !== 'prod') {
+            $data = [
+                'debug' => [
+                    'message'     => $exceptionMessage,
+                    'stack_trace' => $exception->getTrace(),
+                ],
+            ];
+        }
+        $errorMessage = 'An error has occurred.';
+        if ($this->isHttpException($exception)) {
+            if ($exception->getCode() === JsonResponse::HTTP_SERVICE_UNAVAILABLE) {
+                return JsonResponse::create(
+                    $data,
+                    'Platform is currently down for maintenance. Check back soon!',
+                    $exception->getCode()
+                );
+            }
+            return JsonResponse::create($data, $exceptionMessage, $exception->getCode());
         }
 
-        return parent::render($request, $e);
+        if ($exception instanceof HttpResponseException) {
+            return JsonResponse::create(
+                $exception->getResponse()->getContent(),
+                'Input validation failed',
+                $exception->getResponse()->getStatusCode()
+            );
+        }
+        if ($exception instanceof NotFoundHttpException) {
+            return JsonResponse::create(
+                null,
+                '404. Welp, that\'s an error.',
+                JsonResponse::HTTP_NOT_FOUND
+            );
+        }
+        return JsonResponse::create($data, $errorMessage, JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
